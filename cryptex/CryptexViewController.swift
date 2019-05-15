@@ -126,11 +126,12 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
 //        Set up an alert controller with a message telling the user that they have correctly guessed the password
         let correctAlert = UIAlertController(title: "Correct", message: "You answered correctly", preferredStyle: .alert)
 //        Add an action to the alert controller that lets them attempt a new cryptex.
-        correctAlert.addAction(UIAlertAction(title:"New Cryptex" , style: .default, handler: <#T##((UIAlertAction) -> Void)?##((UIAlertAction) -> Void)?##(UIAlertAction) -> Void#>))
+        correctAlert.addAction(UIAlertAction(title:"New Cryptex" , style: .default, handler: {
+            (UIAlertAction) in self.newCryptexAndReset() } ))
 //        You've already done the work of resetting everything with a new cryptex. All you need to do is call newCryptexAndReset() in the handler of the action.
 //        Present the alert controller.
         
-        present(correctAlert, animated: true)
+        present(correctAlert, animated: true, completion: nil)
     }
     
     func presentIncorrectPasswordAlert(){
@@ -144,24 +145,26 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
         
 //        Add an action to the alert controller that lets them attempt a new cryptex.
-        incorrectAlert.addAction(UIAlertAction(title: "Try new cryptext", style: .default, handler: <#T##((UIAlertAction) -> Void)?##((UIAlertAction) -> Void)?##(UIAlertAction) -> Void#>))
+        incorrectAlert.addAction(UIAlertAction(title: "Try new cryptext", style: .default, handler: {(UIAlertAction) in self.newCryptexAndReset() }))
         
 //        Like the previous alert method, call newCryptexAndReset() in the handler of this action.
 //        Present the alert controller.
+        present(incorrectAlert, animated: true, completion: nil)
+        
     }
     
     func presentNoTimeRemainingAlert() {
 //        Set up an alert controller telling the user that they have ran out of time to guess the password, and ask them whether they would like to reset the timer and keep guessing or try a new cryptex.
         let noTimeAlert = UIAlertController(title: "Out of time", message: "You have run out of time", preferredStyle: .alert)
 //        Add an action that lets them reset the timer. What method have you already made that would accomplish this without changing the cryptex?
-        noTimeAlert.addAction(UIAlertAction(title: "Reset Timer", style: .default, handler: <#T##((UIAlertAction) -> Void)?##((UIAlertAction) -> Void)?##(UIAlertAction) -> Void#>))
+        noTimeAlert.addAction(UIAlertAction(title: "Reset Timer", style: .default, handler: {(UIAlertAction) in self.reset() }))
         
 //        Add an action that lets them try a new cryptex. What method have you already made that would reset the timer and change to a new cryptex?
         
-        noTimeAlert.addAction(UIAlertAction(title: "Try new cryptex", style: .default, handler: <#T##((UIAlertAction) -> Void)?##((UIAlertAction) -> Void)?##(UIAlertAction) -> Void#>))
+        noTimeAlert.addAction(UIAlertAction(title: "Try new cryptex", style: .default, handler: {(UIAlertAction) in self.newCryptexAndReset() }))
 //        Present the alert controller.
         
-        present(noTimeAlert, animated: true)
+        present(noTimeAlert, animated: true, completion: nil)
     }
     
 
