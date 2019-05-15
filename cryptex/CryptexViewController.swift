@@ -66,20 +66,31 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
         
         //        Get the title of each row (which should be a single letter) in the picker view (try using a for-in loop) and store each one in an array.
-        
+        //need a placeholder array?
+        var placeholderCharacters: [String] = []
+        for i in ....
 //        Take the array of letters and combine them into a single string.
         
 //        Check if the string matches the model controller's currentCryptex's password, and return a Bool based on their equality.
         
 //        NOTE: When comparing strings, the letter "A" and "a" do not equal each other. To accurately check equality between the two strings, either make them both uppercased or lowercased, then check.
-      
+        
+        //answer would be a combined array
+        let answer = placeholderCharacters.joined()
+        if answer.lowercased() == currentCryptex.password.lowercased() {return true}
+        else {return false}
+        
+        
+        
     }
     var countdownTimer : Timer?
     
     func reset() {
         //        Invalidate the old timer if there is one to ensure you don't present an alert saying the user ran out of time when they actually haven't. (This will make more sense later on)
-        countdownTimer?.invalidate()
-        countdownTimer = nil
+        
+//        countdownTimer?.invalidate()
+//        countdownTimer = nil
+        
 //        Create a new timer and set the value of countdownTimer to it. Use the Timer.scheduledTimer(withTimeInterval: convenience method to do this. Make the time interval 60 seconds. For now, add a print statement in the handler of the timer that says the timer is finished. We'll come back and add some real code to it later on.
         countdownTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false, block: <#T##(Timer) -> Void#>) {
             
