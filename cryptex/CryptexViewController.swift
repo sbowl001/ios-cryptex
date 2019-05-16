@@ -25,6 +25,7 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         pickerView.delegate = self
         pickerView.dataSource = self
         updateViews()
+        reset()
         // Do any additional setup after loading the view.
     }
     
@@ -68,7 +69,13 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         //        Get the title of each row (which should be a single letter) in the picker view (try using a for-in loop) and store each one in an array.
         //need a placeholder array?
         var placeholderCharacters: [String] = []
-        for i in ....
+        for i in 0..<currentCryptex.password.count {
+            let row = pickerView.selectedRow(inComponent: i)
+            guard let title = pickerView(pickerView, titleForRow: row, forComponent: i) else {continue}
+            placeholderCharacters.append(title)
+        }
+        
+        
 //        Take the array of letters and combine them into a single string.
         
 //        Check if the string matches the model controller's currentCryptex's password, and return a Bool based on their equality.
@@ -88,16 +95,16 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     func reset() {
         //        Invalidate the old timer if there is one to ensure you don't present an alert saying the user ran out of time when they actually haven't. (This will make more sense later on)
         
-//        countdownTimer?.invalidate()
-//        countdownTimer = nil
+        countdownTimer?.invalidate()
         
+    
 //        Create a new timer and set the value of countdownTimer to it. Use the Timer.scheduledTimer(withTimeInterval: convenience method to do this. Make the time interval 60 seconds. For now, add a print statement in the handler of the timer that says the timer is finished. We'll come back and add some real code to it later on.
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false, block: <#T##(Timer) -> Void#>) {
-            
-        }
+        let newTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false, block: {(_) in
+            print("working")
+            self.presentNoTimeRemainingAlert() })
 //            Optionally, you can also reset the picker view's components back to "A" using the pickerView.selectRow method. You will have to loop through each character in the password to reset each component. This is not required, but it's a nice feature to add.
         
-        
+        countdownTimer = newTimer
         
 //        This presentNoTimeRemainingAlert() should be called in the handler of the Timer.scheduledTimer method call in the reset() method. You can get rid of the print statement if you wish.
     }
@@ -127,7 +134,7 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         let correctAlert = UIAlertController(title: "Correct", message: "You answered correctly", preferredStyle: .alert)
 //        Add an action to the alert controller that lets them attempt a new cryptex.
         correctAlert.addAction(UIAlertAction(title:"New Cryptex" , style: .default, handler: {
-            (UIAlertAction) in self.newCryptexAndReset() } ))
+            (_) in self.newCryptexAndReset() } ))
 //        You've already done the work of resetting everything with a new cryptex. All you need to do is call newCryptexAndReset() in the handler of the action.
 //        Present the alert controller.
         
@@ -145,7 +152,7 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
         
 //        Add an action to the alert controller that lets them attempt a new cryptex.
-        incorrectAlert.addAction(UIAlertAction(title: "Try new cryptext", style: .default, handler: {(UIAlertAction) in self.newCryptexAndReset() }))
+        incorrectAlert.addAction(UIAlertAction(title: "Try new cryptext", style: .default, handler: {(_) in self.newCryptexAndReset() }))
         
 //        Like the previous alert method, call newCryptexAndReset() in the handler of this action.
 //        Present the alert controller.
@@ -157,11 +164,11 @@ class CryptexViewController: UIViewController, UIPickerViewDataSource, UIPickerV
 //        Set up an alert controller telling the user that they have ran out of time to guess the password, and ask them whether they would like to reset the timer and keep guessing or try a new cryptex.
         let noTimeAlert = UIAlertController(title: "Out of time", message: "You have run out of time", preferredStyle: .alert)
 //        Add an action that lets them reset the timer. What method have you already made that would accomplish this without changing the cryptex?
-        noTimeAlert.addAction(UIAlertAction(title: "Reset Timer", style: .default, handler: {(UIAlertAction) in self.reset() }))
+        noTimeAlert.addAction(UIAlertAction(title: "Reset Timer", style: .default, handler: {(_) in self.reset() }))
         
 //        Add an action that lets them try a new cryptex. What method have you already made that would reset the timer and change to a new cryptex?
         
-        noTimeAlert.addAction(UIAlertAction(title: "Try new cryptex", style: .default, handler: {(UIAlertAction) in self.newCryptexAndReset() }))
+        noTimeAlert.addAction(UIAlertAction(title: "Try new cryptex", style: .default, handler: {(_) in self.newCryptexAndReset() }))
 //        Present the alert controller.
         
         present(noTimeAlert, animated: true, completion: nil)
